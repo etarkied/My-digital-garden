@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/measurement-and-sim/untitled/","dg-note-properties":{}}
+{"dg-publish":true,"permalink":"/measurement-and-sim/untitled/","tags":["gardenEntry"],"dg-note-properties":{}}
 ---
 
 
