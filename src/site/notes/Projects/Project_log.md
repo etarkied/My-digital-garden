@@ -15,4 +15,5 @@
 | **200 Hz** | **5 ms** | **1.1675 W** |
 | 1000 Hz    | 1 ms     | 2.2736 W     |
 | 5000 Hz    | 0.2 ms   | 86.9081 W    |
-![img_v3_0217a_4a47c27c-35a8-4c63-bc5a-4bdd8471005g.jpg](/img/user/Projects/assets/Project_log/img_v3_0217a_4a47c27c-35a8-4c63-bc5a-4bdd8471005g.jpg)
+
+![img_v3_0217a_4a47c27c-35a8-4c63-bc5a-4bdd8471005g.jpg\|462](/img/user/Projects/assets/Project_log/img_v3_0217a_4a47c27c-35a8-4c63-bc5a-4bdd8471005g.jpg)
