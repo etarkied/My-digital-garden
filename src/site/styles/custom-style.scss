@@ -1,13 +1,1702 @@
+/* =====================================================================
+   Etar's Note Cabin
+   A warm, quiet reading room for notes.
+
+   This is custom-style.scss: the template keeps this file across updates,
+   so every visual decision for the garden lives here.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. Design tokens
+   ------------------------------------------------------------------ */
+
 body {
-    /***
-      ADD YOUR CUSTOM STYLING HERE. (INSIDE THE body {...} section.)
-      IT WILL TAKE PRECEDENCE OVER THE STYLING IN THE STYLE.CSS FILE.
-   ***/
-    //  background-color: white;
-    //  .content {
-    //   font-size: 14px;
-    //  }
-    //  h1 {
-    //   color: black;
-    //  }
+    /* Type */
+    --cabin-font-display: "Epilogue", "Manrope", -apple-system,
+        BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+        "Microsoft YaHei", "Noto Sans SC", "Noto Sans CJK SC", sans-serif;
+    --cabin-font-body: "Manrope", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+        "Noto Sans SC", "Noto Sans CJK SC", sans-serif;
+    --cabin-font-mono: "JetBrains Mono", "Cascadia Code", ui-monospace,
+        SFMono-Regular, Menlo, Consolas, monospace;
+
+    --font-default: var(--cabin-font-body);
+    --font-text-theme: var(--cabin-font-body);
+    --font-interface-theme: var(--cabin-font-body);
+    --font-heading: var(--cabin-font-display);
+    --font-monospace: var(--cabin-font-mono);
+
+    /* Reading column */
+    --dg-content-max-width: 780px;
+    --dg-content-font-size: 17.5px;
+    --dg-content-line-height: 1.8;
+    --dg-content-padding-top: 76px;
+
+    /* Left file tree */
+    --dg-filetree-width: 288px;
+    --dg-filetree-min-width: 288px;
+    --dg-filetree-gap: 56px;
+    --dg-filetree-padding: 26px 22px 32px;
+
+    /* Right rail */
+    --dg-sidebar-top: 88px;
+    --dg-sidebar-gap: 48px;
+    --dg-sidebar-max-width: 320px;
+    --dg-sidebar-container-padding: 4px;
+    --dg-graph-width: 268px;
+    --dg-graph-height: 210px;
+    --dg-graph-border-radius: var(--cabin-radius-m);
+    --dg-graph-bg: var(--cabin-surface);
+    --dg-graph-border-color: var(--cabin-line);
+
+    /* Navbar */
+    --dg-navbar-height: 66px;
+    --dg-logo-height: 34px;
+    --dg-logo-height-mobile: 30px;
+    --dg-filetree-logo-height: 42px;
+    --dg-logo-margin: 0;
+
+    /* Shape */
+    --cabin-radius-s: 8px;
+    --cabin-radius-m: 14px;
+    --cabin-radius-l: 20px;
+    --cabin-radius-xl: 26px;
+
+    /* Motion */
+    --cabin-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+    /* Note links */
+    --dg-notelink-padding: 6px 10px 6px 12px;
+    --dg-notelink-size: 0.88rem;
+    --dg-notelink-hover-bg: var(--cabin-hover);
+    --dg-notelink-border-width: 3px;
+    --dg-folder-margin: 4px 0;
+    --dg-inner-folder-margin: 10px;
+
+    /* Search */
+    --dg-search-box-radius: var(--cabin-radius-l);
+    --dg-search-input-radius: 10px;
+    --dg-search-result-radius: 10px;
+    --dg-search-divider-color: var(--cabin-line);
+    --dg-search-highlight-bg: rgba(211, 145, 74, 0.22);
+
+    /* Tags / callouts */
+    --callout-radius: var(--cabin-radius-m);
+    --callout-border-opacity: 1;
+    --callout-border-width: 0 0 0 3px;
+    --callout-padding: 14px 18px;
+
+    /* Note icons keep the template's naming */
+    --note-icon-fallback: url(/img/default-note-icon.svg);
+}
+
+/* ---------------------------------------------------------------------
+   2. Palette — warm parchment by day, an oil lamp at night
+   ------------------------------------------------------------------ */
+
+body.theme-light {
+    color-scheme: light;
+
+    --cabin-canvas: #f6efe3;
+    --cabin-canvas-deep: #efe5d5;
+    --cabin-surface: #fffaf1;
+    --cabin-surface-soft: #fbf4e8;
+    --cabin-ink: #2a211a;
+    --cabin-ink-soft: #57473b;
+    --cabin-ink-faint: #8b7767;
+    --cabin-amber: #a8642f;
+    --cabin-amber-soft: #c98648;
+    --cabin-amber-wash: rgba(168, 100, 47, 0.1);
+    --cabin-pine: #4c6b52;
+    --cabin-line: #e7dccb;
+    --cabin-line-strong: #d9c9b1;
+    --cabin-hover: rgba(168, 100, 47, 0.08);
+    --cabin-shadow: 0 18px 40px -24px rgba(72, 46, 26, 0.35);
+    --cabin-shadow-soft: 0 2px 10px -4px rgba(72, 46, 26, 0.25);
+    --cabin-glow: radial-gradient(
+        1200px 420px at 50% -80px,
+        rgba(226, 178, 112, 0.22),
+        transparent 70%
+    );
+
+    --background-primary: var(--cabin-canvas);
+    --background-primary-alt: var(--cabin-surface-soft);
+    --background-secondary: #f1e8d9;
+    --background-secondary-alt: #ece1cf;
+    --surface: var(--cabin-surface);
+    --surface-inset: #f2e9da;
+    --background-modifier-border: var(--cabin-line);
+    --background-modifier-hover: var(--cabin-hover);
+
+    --text-normal: var(--cabin-ink);
+    --text-muted: var(--cabin-ink-soft);
+    --text-faint: var(--cabin-ink-faint);
+    --text-accent: var(--cabin-amber);
+    --text-accent-hover: #8f5123;
+    --text-on-accent: #fffaf1;
+
+    --interactive-accent: var(--cabin-amber);
+    --interactive-accent-hover: #8f5123;
+    --interactive-normal: #f2e9da;
+    --interactive-hover: #eae0ce;
+
+    --link-color: var(--cabin-amber);
+    --link-color-hover: #8f5123;
+    --text-selection: rgba(211, 145, 74, 0.25);
+    --text-highlight-bg: rgba(226, 178, 112, 0.45);
+    --rule: var(--cabin-line-strong);
+    --accent-wash: var(--cabin-amber-wash);
+}
+
+body.theme-dark {
+    color-scheme: dark;
+
+    --cabin-canvas: #17120e;
+    --cabin-canvas-deep: #120e0b;
+    --cabin-surface: #1e1813;
+    --cabin-surface-soft: #221b15;
+    --cabin-ink: #ede2d3;
+    --cabin-ink-soft: #b6a695;
+    --cabin-ink-faint: #877665;
+    --cabin-amber: #e6a465;
+    --cabin-amber-soft: #f0bd8a;
+    --cabin-amber-wash: rgba(230, 164, 101, 0.1);
+    --cabin-pine: #93b18c;
+    --cabin-line: #322820;
+    --cabin-line-strong: #43362b;
+    --cabin-hover: rgba(230, 164, 101, 0.07);
+    --cabin-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.8);
+    --cabin-shadow-soft: 0 2px 12px -4px rgba(0, 0, 0, 0.6);
+    --cabin-glow: radial-gradient(
+        1100px 420px at 50% -80px,
+        rgba(196, 128, 70, 0.12),
+        transparent 70%
+    );
+
+    --background-primary: var(--cabin-canvas);
+    --background-primary-alt: var(--cabin-surface-soft);
+    --background-secondary: #1b1511;
+    --background-secondary-alt: #221b15;
+    --surface: var(--cabin-surface);
+    --surface-inset: #251d17;
+    --background-modifier-border: var(--cabin-line);
+    --background-modifier-hover: var(--cabin-hover);
+
+    --text-normal: var(--cabin-ink);
+    --text-muted: var(--cabin-ink-soft);
+    --text-faint: var(--cabin-ink-faint);
+    --text-accent: var(--cabin-amber);
+    --text-accent-hover: var(--cabin-amber-soft);
+    --text-on-accent: #241704;
+
+    --interactive-accent: var(--cabin-amber);
+    --interactive-accent-hover: var(--cabin-amber-soft);
+    --interactive-normal: #251d17;
+    --interactive-hover: #2d241c;
+
+    --link-color: var(--cabin-amber);
+    --link-color-hover: var(--cabin-amber-soft);
+    --text-selection: rgba(230, 164, 101, 0.22);
+    --text-highlight-bg: rgba(230, 164, 101, 0.3);
+    --rule: var(--cabin-line-strong);
+    --accent-wash: var(--cabin-amber-wash);
+}
+
+/* ---------------------------------------------------------------------
+   3. Page shell
+   ------------------------------------------------------------------ */
+
+html {
+    scroll-behavior: smooth;
+    background: var(--cabin-canvas);
+}
+
+body.theme-light,
+body.theme-dark {
+    background-color: var(--cabin-canvas);
+    background-image: var(--cabin-glow);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--cabin-ink);
+    font-family: var(--cabin-font-body);
+    font-size: 16px;
+    letter-spacing: 0.002em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+::selection {
+    background: var(--text-selection);
+}
+
+/* An understated scrollbar that matches the room. */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--cabin-line-strong) transparent;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--cabin-line-strong);
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--cabin-ink-faint);
+    background-clip: content-box;
+}
+
+:focus-visible {
+    outline: 2px solid var(--cabin-amber);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* ---------------------------------------------------------------------
+   4. Brand lockup (navbar, mobile navbar, file tree)
+   ------------------------------------------------------------------ */
+
+.site-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none !important;
+    color: var(--cabin-ink) !important;
+    min-width: 0;
+}
+
+.site-brand .site-logo {
+    height: var(--dg-logo-height);
+    width: auto;
+    margin: 0;
+    border-radius: 10px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px -6px rgba(90, 50, 20, 0.55);
+    transition: transform 220ms var(--cabin-ease);
+}
+
+.site-brand:hover .site-logo {
+    transform: translateY(-1px) rotate(-2deg);
+}
+
+.site-wordmark {
+    font-family: var(--cabin-font-display);
+    font-weight: 700;
+    font-size: 1.06rem;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+    color: var(--cabin-ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+}
+
+.site-brand:hover .site-wordmark {
+    color: var(--cabin-amber) !important;
+}
+
+/* ---------------------------------------------------------------------
+   5. Navbar
+   ------------------------------------------------------------------ */
+
+.navbar {
+    height: var(--dg-navbar-height);
+    padding: 0 28px 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background-color: color-mix(in srgb, var(--cabin-canvas) 82%, transparent);
+    border-bottom: 1px solid var(--cabin-line);
+    backdrop-filter: saturate(140%) blur(14px);
+    -webkit-backdrop-filter: saturate(140%) blur(14px);
+    box-shadow: 0 8px 24px -22px rgba(0, 0, 0, 0.5);
+    z-index: 12;
+}
+
+@supports not (background-color: color-mix(in srgb, red 50%, blue)) {
+    .navbar {
+        background-color: var(--cabin-canvas);
+    }
+}
+
+.navbar .navbar-inner {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    cursor: default;
+}
+
+.navbar .navbar-inner h1 {
+    margin: 0 !important;
+    padding: 0;
+    border: none;
+    font-size: 1.06rem;
+    line-height: 1;
+    letter-spacing: -0.015em;
+    color: var(--cabin-ink);
+}
+
+.navbar .site-logo {
+    height: var(--dg-logo-height);
+    width: auto;
+    margin: 0;
+}
+
+.navbar-actions {
+    gap: 6px;
+}
+
+.navbar .search-button {
+    margin: 0 8px 0 0;
+    height: 38px;
+    padding: 0 14px;
+    border: 1px solid var(--cabin-line);
+    border-radius: 999px;
+    background-color: color-mix(in srgb, var(--cabin-surface) 70%, transparent);
+    color: var(--cabin-ink-soft);
+    transition: border-color 160ms var(--cabin-ease),
+        color 160ms var(--cabin-ease), background-color 160ms var(--cabin-ease);
+}
+
+.navbar .search-button:hover {
+    border-color: var(--cabin-amber);
+    color: var(--cabin-amber);
+    background-color: var(--cabin-amber-wash);
+}
+
+.navbar .search-button .search-icon svg,
+.navbar .search-button .search-icon i {
+    opacity: 1;
+    color: currentColor;
+}
+
+.navbar .search-keys {
+    background-color: var(--cabin-hover);
+    border-radius: 6px;
+    padding: 2px 7px;
+    color: var(--cabin-ink-faint);
+}
+
+.navbar .search-keys code {
+    background: none;
+    padding: 0;
+    font-size: 0.68rem;
+    color: inherit;
+}
+
+.navbar .page-panel-toggle {
+    margin: 0;
+    border-color: var(--cabin-line);
+    background-color: transparent;
+    border-radius: 999px;
+}
+
+.navbar .page-panel-toggle:hover {
+    border-color: var(--cabin-amber);
+    color: var(--cabin-amber);
+}
+
+/* Hamburger button used by the file tree navbar on phones. */
+.navbar-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    margin-right: 10px;
+    padding: 0;
+    border: 1px solid var(--cabin-line);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--cabin-ink-soft);
+    cursor: pointer;
+    transition: color 160ms var(--cabin-ease),
+        border-color 160ms var(--cabin-ease);
+}
+
+.navbar-menu-toggle:hover {
+    color: var(--cabin-amber);
+    border-color: var(--cabin-amber);
+}
+
+.navbar-menu-toggle svg {
+    width: 19px;
+    height: 19px;
+}
+
+.site-brand-centered {
+    flex: 1;
+    justify-content: center;
+}
+
+/* Search-only bar on pages without a home link. */
+.empty-navbar {
+    margin-bottom: -60px;
+    padding: 14px 28px;
+}
+
+.empty-navbar .search-button {
+    margin: 0;
+    border-radius: 999px;
+    border: 1px solid var(--cabin-line);
+    background-color: var(--cabin-surface);
+}
+
+/* ---------------------------------------------------------------------
+   6. Left file tree
+   ------------------------------------------------------------------ */
+
+.filetree-wrapper {
+    background-color: var(--cabin-canvas-deep);
+    border-right: 1px solid var(--cabin-line);
+}
+
+.filetree-sidebar {
+    padding: var(--dg-filetree-padding);
+    color: var(--cabin-ink-soft);
+}
+
+.filetree-sidebar .site-brand-stacked {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 2px 6px 0;
+    margin-bottom: 6px;
+}
+
+.site-brand-stacked .site-logo {
+    height: var(--dg-filetree-logo-height);
+    border-radius: 12px;
+    box-shadow: 0 8px 18px -12px rgba(70, 40, 15, 0.7);
+}
+
+.site-brand-stacked .site-wordmark {
+    font-size: 1.42rem;
+    line-height: 1.15;
+    letter-spacing: -0.028em;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    color: var(--cabin-ink);
+}
+
+.site-brand-stacked:hover .site-wordmark {
+    color: var(--cabin-amber) !important;
+}
+
+.filetree-sidebar .search-button {
+    width: 100%;
+    height: 40px;
+    margin: 16px 0 18px;
+    padding: 0 12px;
+    border-radius: 10px;
+    border: 1px solid var(--cabin-line);
+    background-color: var(--cabin-surface);
+    color: var(--cabin-ink-soft);
+    transition: border-color 160ms var(--cabin-ease),
+        box-shadow 160ms var(--cabin-ease), color 160ms var(--cabin-ease);
+}
+
+.filetree-sidebar .search-button:hover {
+    border-color: var(--cabin-line-strong);
+    color: var(--cabin-ink);
+    box-shadow: var(--cabin-shadow-soft);
+}
+
+.filetree-sidebar > .folder {
+    padding-top: 4px;
+    border-top: 1px solid var(--cabin-line);
+}
+
+/* -- Tree items -- */
+
+.foldername-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    margin: 2px 0;
+    border-radius: 8px;
+    font-weight: 600;
+    color: var(--cabin-ink-soft);
+    transition: background-color 140ms var(--cabin-ease),
+        color 140ms var(--cabin-ease);
+}
+
+.foldername-wrapper:hover {
+    background-color: var(--cabin-hover);
+    color: var(--cabin-ink);
+}
+
+.foldername-wrapper i,
+.foldername-wrapper svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0.55;
+    color: var(--cabin-ink-faint);
+    flex-shrink: 0;
+}
+
+.notelink {
+    border-radius: 8px;
+    border-left: var(--dg-notelink-border-width) solid transparent;
+    margin: 1px 0;
+    padding: 5px 10px 5px 12px;
+    transition: background-color 140ms var(--cabin-ease),
+        color 140ms var(--cabin-ease);
+}
+
+.notelink .filename {
+    color: var(--cabin-ink-soft) !important;
+    text-decoration: none !important;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color 140ms var(--cabin-ease);
+}
+
+.notelink:hover {
+    background-color: var(--cabin-hover);
+}
+
+.notelink:hover .filename {
+    color: var(--cabin-ink) !important;
+    text-decoration: none !important;
+}
+
+.notelink.active-note {
+    border-left-color: var(--cabin-amber);
+    background-color: var(--cabin-amber-wash);
+}
+
+.notelink.active-note .filename {
+    color: var(--cabin-ink) !important;
+    font-weight: 700;
+}
+
+/* Root-level notes align with folder labels. */
+.folder > div:not(.filelist) > .notelink {
+    margin-left: 0;
+}
+
+.filelist {
+    margin-left: 12px;
+    border-left: 1px solid var(--cabin-line);
+}
+
+.inner-folder {
+    margin-left: 8px;
+}
+
+/* Full screen file drawer on phones. */
+.filetree-wrapper {
+    box-shadow: none;
+}
+
+@media (max-width: 1000px) {
+    /* The drawer slides in under the navbar instead of over it. */
+    .filetree-wrapper {
+        top: var(--dg-navbar-height);
+        height: calc(100vh - var(--dg-navbar-height));
+        width: 88vw;
+        max-width: 340px;
+        box-shadow: 24px 0 60px -30px rgba(0, 0, 0, 0.65);
+    }
+
+    .fullpage-overlay {
+        top: var(--dg-navbar-height);
+        background-color: color-mix(in srgb, #120c08 55%, transparent);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+    }
+}
+
+/* ---------------------------------------------------------------------
+   7. Reading column — typography that breathes
+   ------------------------------------------------------------------ */
+
+.content {
+    color: var(--text-normal);
+    letter-spacing: 0.004em;
+    word-wrap: break-word;
+}
+
+.content > header {
+    margin-bottom: 1.9em;
+    padding-bottom: 1.2em;
+    border-bottom: 1px solid var(--cabin-line);
+}
+
+.content header h1 {
+    margin: 0 0 0.4em;
+    font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.35rem);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+    color: var(--cabin-ink);
+}
+
+.header-tags {
+    gap: 8px;
+    margin-top: 0.35em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--cabin-font-display);
+    color: var(--cabin-ink);
+    letter-spacing: -0.018em;
+    line-height: 1.28;
+    margin: 1.7em 0 0.55em;
+    font-weight: 700;
+}
+
+.content h1 {
+    font-size: 1.95rem;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 1.5rem;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid var(--cabin-line);
+    font-weight: 750;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--cabin-ink);
+}
+
+h4 {
+    font-size: 1.03rem;
+    font-weight: 700;
+}
+
+h5,
+h6 {
+    font-size: 0.94rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--cabin-ink-soft);
+}
+
+h6 {
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    font-size: 0.78rem;
+    color: var(--cabin-ink-faint);
+}
+
+p {
+    margin: 0 0 1.15em;
+}
+
+/* Chinese body copy wants a hair more air between glyphs. */
+.content :lang(zh),
+.content p,
+.content li,
+.content td,
+.content blockquote {
+    font-feature-settings: "palt" 0;
+    word-break: break-word;
+}
+
+.content p,
+.content li {
+    line-height: 1.85;
+}
+
+strong,
+b {
+    font-weight: 700;
+    color: var(--cabin-ink);
+}
+
+/* Links look like pencil annotations, not web chrome. */
+.content a,
+.content .internal-link,
+.content .external-link {
+    color: var(--cabin-amber);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: color-mix(in srgb, currentColor 42%, transparent);
+    text-underline-offset: 0.2em;
+    transition: color 150ms var(--cabin-ease),
+        text-decoration-color 150ms var(--cabin-ease);
+}
+
+@supports not (text-decoration-color: color-mix(in srgb, red 40%, transparent)) {
+    .content a {
+        text-decoration-color: currentColor;
+    }
+}
+
+.content a:hover,
+.content .internal-link:hover {
+    color: var(--cabin-amber-soft);
+    text-decoration-color: currentColor;
+}
+
+@media (hover: hover) {
+    html.dg-loaded .content a:hover {
+        color: var(--cabin-amber-soft);
+    }
+}
+
+.content .internal-link {
+    font-weight: 500;
+}
+
+/* External links get an inline mark that follows the text colour. */
+.external-link {
+    background-image: none;
+    padding-right: 0;
+}
+
+.external-link::after {
+    content: "";
+    display: inline-block;
+    width: 0.72em;
+    height: 0.72em;
+    margin-left: 0.28em;
+    vertical-align: baseline;
+    translate: 0 -0.05em;
+    background-color: currentColor;
+    opacity: 0.5;
+    -webkit-mask-image: url("/img/outgoing.svg");
+    mask-image: url("/img/outgoing.svg");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+}
+
+.internal-link {
+    text-decoration-thickness: 1px;
+}
+
+/* Lists */
+ul,
+ol {
+    padding-left: 1.45em;
+    margin: 0 0 1.1em;
+}
+
+li {
+    margin: 0.32em 0;
+    padding-left: 0.1em;
+}
+
+li::marker {
+    color: var(--cabin-amber-soft);
+}
+
+li > p {
+    margin: 0.25em 0;
+}
+
+.task-list-item {
+    list-style: none;
+}
+
+input[type="checkbox"] {
+    accent-color: var(--cabin-amber);
+    width: 1em;
+    height: 1em;
+    margin-right: 0.35em;
+}
+
+/* Quotes read like margin notes. */
+blockquote {
+    margin: 1.6em 0;
+    padding: 0.9em 1.2em;
+    border-left: 3px solid var(--cabin-amber-soft);
+    border-radius: 0 var(--cabin-radius-s) var(--cabin-radius-s) 0;
+    background-color: var(--accent-wash);
+    color: var(--cabin-ink-soft);
+    font-style: normal;
+}
+
+blockquote p {
+    margin: 0.35em 0;
+}
+
+blockquote p:first-child {
+    margin-top: 0;
+}
+
+blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+/* Rules as a quiet hairline with a centre dot. */
+hr {
+    border: none;
+    height: 1.6em;
+    margin: 2.4em 0;
+    background-image: radial-gradient(
+        circle at center,
+        var(--cabin-line-strong) 0 2px,
+        transparent 2px
+    );
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 1px;
+    position: relative;
+}
+
+hr::before,
+hr::after {
+    content: "";
+}
+
+/* Images sit like prints in an album. */
+.content img {
+    display: block;
+    max-width: 100%;
+    margin: 1.4em auto;
+    border-radius: var(--cabin-radius-m);
+    box-shadow: var(--cabin-shadow);
+}
+
+p > img:only-child {
+    margin: 1.6em auto;
+}
+
+/* Long words in Chinese notes wrap naturally. */
+.content {
+    overflow-wrap: break-word;
+}
+
+/* ---------------------------------------------------------------------
+   8. Code
+   ------------------------------------------------------------------ */
+
+code {
+    font-family: var(--cabin-font-mono);
+    font-size: 0.86em;
+    font-feature-settings: "liga" 0;
+}
+
+:not(pre) > code {
+    color: var(--cabin-amber);
+    background-color: var(--accent-wash);
+    border: 1px solid var(--cabin-line);
+    border-radius: 6px;
+    padding: 0.1em 0.42em;
+    white-space: nowrap;
+}
+
+pre[class*="language-"],
+pre {
+    background-color: #14100c !important;
+    color: #e9dccb;
+    border: 1px solid #241d16;
+    border-radius: var(--cabin-radius-m);
+    padding: 1.15em 1.3em;
+    margin: 1.6em 0;
+    font-size: 0.86rem;
+    line-height: 1.65;
+    overflow-x: auto;
+    box-shadow: var(--cabin-shadow-soft);
+}
+
+body.theme-light pre[class*="language-"],
+body.theme-light pre {
+    background-color: #221a13 !important;
+}
+
+pre code {
+    background: none !important;
+    border: none !important;
+    color: inherit !important;
+    padding: 0 !important;
+    font-size: inherit;
+}
+
+pre code .token.comment,
+pre code .token.prolog,
+pre code .token.doctype,
+pre code .token.cdata {
+    color: #8d7a67;
+}
+
+/* Mermaid diagrams: paper, not a white sticker. */
+.markdown-preview-view pre.mermaid,
+pre.mermaid {
+    background: var(--cabin-surface) !important;
+    border: 1px solid var(--cabin-line);
+    border-radius: var(--cabin-radius-m);
+    padding: 14px;
+    text-align: center;
+}
+
+/* ---------------------------------------------------------------------
+   9. Tables
+   ------------------------------------------------------------------ */
+
+.table-wrapper {
+    margin: 1.7em 0;
+    border-radius: var(--cabin-radius-m);
+    border: 1px solid var(--cabin-line);
+    overflow: auto;
+    box-shadow: var(--cabin-shadow-soft);
+}
+
+.table-wrapper > table {
+    margin: 0;
+    border: none;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    font-size: 0.94rem;
+    line-height: 1.6;
+    background-color: var(--cabin-surface);
+}
+
+/* The theme paints its own cells; reset those first so the cabin shows. */
+.markdown-rendered th,
+.markdown-rendered td,
+table th,
+table td {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid var(--cabin-line);
+    box-shadow: none;
+    color: var(--cabin-ink);
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    max-width: none;
+    min-width: 0;
+}
+
+th,
+td {
+    padding: 0.62em 1em;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    font-family: var(--cabin-font-display);
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--cabin-ink-soft) !important;
+    background-color: var(--cabin-surface-soft) !important;
+    border-bottom: 1px solid var(--cabin-line-strong);
+    white-space: nowrap;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:hover td {
+    background-color: var(--cabin-hover);
+}
+
+tbody tr:nth-child(even) td {
+    background-color: color-mix(
+        in srgb,
+        var(--cabin-surface-soft) 55%,
+        transparent
+    );
+}
+
+/* ---------------------------------------------------------------------
+   10. Tags & callouts
+   ------------------------------------------------------------------ */
+
+a.tag,
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    background-color: var(--accent-wash);
+    color: var(--cabin-amber);
+    border: 1px solid color-mix(in srgb, var(--cabin-amber) 22%, transparent);
+    border-radius: 999px;
+    padding: 0.08em 0.68em;
+    font-size: 0.78em;
+    font-weight: 600;
+    letter-spacing: 0.005em;
+    text-decoration: none;
+    transition: background-color 150ms var(--cabin-ease),
+        border-color 150ms var(--cabin-ease);
+}
+
+a.tag:hover,
+.tag:hover {
+    background-color: color-mix(in srgb, var(--cabin-amber) 16%, transparent);
+    border-color: color-mix(in srgb, var(--cabin-amber) 42%, transparent);
+    color: var(--cabin-amber);
+    text-decoration: none;
+}
+
+.header-tags .tag {
+    font-size: 0.8em;
+}
+
+.callout {
+    border-radius: var(--cabin-radius-m);
+    border-width: 0;
+    border-left-width: 3px;
+    border-left-style: solid;
+    border-left-color: rgba(var(--callout-color), 0.75);
+    background-color: rgba(var(--callout-color), 0.08);
+    padding: var(--callout-padding);
+    margin: 1.6em 0;
+    box-shadow: none;
+}
+
+.callout-title {
+    font-family: var(--cabin-font-display);
+    font-weight: 700;
+    letter-spacing: -0.005em;
+}
+
+.callout-content {
+    color: var(--cabin-ink-soft);
+}
+
+.callout-content a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+/* ---------------------------------------------------------------------
+   11. Right rail — contents, graph, backlinks
+   ------------------------------------------------------------------ */
+
+.sidebar-container {
+    border-radius: var(--cabin-radius-m);
+}
+
+.toc-title-container {
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--cabin-line);
+}
+
+.toc-title-container .toc-title {
+    font-family: var(--cabin-font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.68rem !important;
+    font-weight: 700;
+    color: var(--cabin-ink-faint) !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.toc-container {
+    font-size: 0.84rem;
+    line-height: 1.5;
+}
+
+.toc-container ul,
+.toc-container ol {
+    list-style: none;
+    padding-inline-start: 0 !important;
+    margin: 0 !important;
+    border-left: none;
+}
+
+.toc-container li {
+    margin: 0 !important;
+    padding: 2px 0 !important;
+}
+
+.toc-container li li {
+    padding-inline-start: 0.9em !important;
+}
+
+.toc-container a {
+    display: block;
+    padding: 3px 10px;
+    border-left: 2px solid transparent;
+    border-radius: 0 6px 6px 0;
+    color: var(--cabin-ink-soft);
+    text-decoration: none;
+    line-height: 1.45;
+    transition: color 140ms var(--cabin-ease),
+        background-color 140ms var(--cabin-ease),
+        border-color 140ms var(--cabin-ease);
+}
+
+.toc-container a:hover {
+    color: var(--cabin-ink);
+    background-color: var(--cabin-hover);
+    text-decoration: none;
+}
+
+.toc-container a.toc-active {
+    color: var(--cabin-amber);
+    border-left-color: var(--cabin-amber);
+    background-color: var(--accent-wash);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* Local graph: a little framed window. */
+#link-graph {
+    background-color: var(--cabin-surface);
+    border: 1px solid var(--cabin-line) !important;
+    border-radius: var(--cabin-radius-m) !important;
+    overflow: hidden;
+    box-shadow: var(--cabin-shadow-soft);
+}
+
+#graph-controls {
+    background-color: color-mix(in srgb, var(--cabin-surface) 88%, transparent);
+    border: 1px solid var(--cabin-line);
+    border-radius: 999px;
+    box-shadow: none;
+    color: var(--cabin-ink-faint);
+    backdrop-filter: blur(6px);
+}
+
+#graph-controls svg,
+#graph-controls i {
+    opacity: 0.75;
+}
+
+#graph-controls svg:hover,
+#graph-controls i:hover {
+    color: var(--cabin-amber);
+    opacity: 1;
+}
+
+/* Backlinks as soft cards. */
+.backlinks {
+    margin-top: 22px;
+    padding-left: 0;
+}
+
+.backlinks .backlink-title {
+    font-family: var(--cabin-font-display);
+    font-size: 0.68rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+    color: var(--cabin-ink-faint);
+    margin: 0 0 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--cabin-line);
+}
+
+.backlink-list {
+    max-height: none;
+}
+
+.backlink-card {
+    padding: 0;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    transition: background-color 140ms var(--cabin-ease);
+}
+
+.backlink-card:hover {
+    background-color: var(--cabin-hover);
+}
+
+.backlink-card a.backlink {
+    display: block;
+    padding: 6px 10px;
+    font-size: 0.84rem;
+    color: var(--cabin-ink-soft);
+    text-decoration: none;
+    border-left: 2px solid var(--cabin-line-strong);
+    border-radius: 0 6px 6px 0;
+}
+
+.backlink-card a.backlink:hover {
+    color: var(--cabin-amber);
+    border-left-color: var(--cabin-amber);
+}
+
+.backlink-card > svg,
+.backlink-card > i {
+    margin-left: 10px;
+}
+
+.no-backlinks-message {
+    display: block;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--cabin-ink-faint);
+    border-left: 2px dashed var(--cabin-line-strong);
+}
+
+/* Floating page-panel button. */
+.page-panel-toggle.page-panel-fab {
+    background-color: var(--cabin-surface);
+    border: 1px solid var(--cabin-line);
+    color: var(--cabin-ink-soft);
+    box-shadow: var(--cabin-shadow-soft);
+}
+
+.page-panel-toggle.page-panel-fab:hover {
+    color: var(--cabin-amber);
+    border-color: var(--cabin-amber);
+}
+
+/* ---------------------------------------------------------------------
+   12. Search
+   ------------------------------------------------------------------ */
+
+.search-container {
+    background-color: color-mix(in srgb, #1a120c 55%, transparent);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding-top: 9vh;
+}
+
+.search-box {
+    background-color: var(--cabin-surface);
+    border: 1px solid var(--cabin-line);
+    box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.65);
+}
+
+.search-box input {
+    font-family: var(--cabin-font-display);
+    background-color: var(--cabin-canvas);
+    border: 1px solid var(--cabin-line);
+    color: var(--cabin-ink);
+    transition: border-color 160ms var(--cabin-ease),
+        box-shadow 160ms var(--cabin-ease);
+}
+
+.search-box input::placeholder {
+    color: var(--cabin-ink-faint);
+}
+
+.search-box input:focus {
+    border-color: var(--cabin-amber);
+    box-shadow: 0 0 0 3px var(--accent-wash);
+    outline: none;
+}
+
+.searchresult {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--cabin-radius-s);
+    padding: 11px 12px;
+    transition: background-color 130ms var(--cabin-ease),
+        border-color 130ms var(--cabin-ease);
+}
+
+.searchresult:hover {
+    background-color: var(--cabin-hover);
+}
+
+.searchresult.active {
+    background-color: var(--accent-wash);
+    border-color: color-mix(in srgb, var(--cabin-amber) 45%, transparent);
+}
+
+.result-title {
+    font-family: var(--cabin-font-display);
+    color: var(--cabin-ink);
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.searchresult.active .result-title {
+    color: var(--cabin-amber);
+}
+
+.result-excerpt {
+    color: var(--cabin-ink-soft);
+}
+
+.result-tags .tag,
+.preview-tags .tag {
+    background-color: var(--accent-wash);
+    color: var(--cabin-amber);
+    font-size: 0.72rem;
+}
+
+.preview-title {
+    font-family: var(--cabin-font-display);
+    color: var(--cabin-amber) !important;
+}
+
+.search-highlight {
+    background-color: var(--dg-search-highlight-bg);
+    color: inherit;
+    border-radius: 3px;
+}
+
+.search-box-footer {
+    color: var(--cabin-ink-faint);
+}
+
+.navigation-hint code {
+    background-color: var(--cabin-surface-soft);
+    border: 1px solid var(--cabin-line);
+    border-radius: 5px;
+    padding: 1px 6px;
+    font-size: 0.72rem;
+    color: var(--cabin-ink-soft);
+}
+
+.preview-body pre {
+    margin: 1em 0;
+}
+
+/* ---------------------------------------------------------------------
+   13. Footer
+   ------------------------------------------------------------------ */
+
+.site-footer {
+    position: relative;
+    clear: both;
+    margin: 4.5rem auto 0;
+    padding: 2.2rem 24px 2.6rem;
+    border-top: 1px solid var(--cabin-line);
+    color: var(--cabin-ink-faint);
+    font-size: 0.8rem;
+    /* Keep the imprint on the reading column, not under the rail. */
+    width: min(100%, calc(var(--dg-content-max-width) + 48px));
+}
+
+.site-footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px 18px;
+    max-width: var(--dg-content-max-width);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.site-footer-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--cabin-font-display);
+    font-weight: 600;
+    color: var(--cabin-ink-soft);
+    letter-spacing: -0.01em;
+}
+
+.site-footer-logo {
+    height: 22px;
+    width: auto;
+    border-radius: 6px;
+    opacity: 0.85;
+}
+
+.site-footer-meta {
+    color: var(--cabin-ink-faint);
+}
+
+/* The reading column already ends with the footer. */
+.content {
+    padding-bottom: 0;
+}
+
+body.has-navbar .site-footer {
+    margin-top: 5rem;
+}
+
+/* ---------------------------------------------------------------------
+   14. Small details
+   ------------------------------------------------------------------ */
+
+/* Fallback front page list */
+.dg-fallback-index-intro {
+    color: var(--cabin-ink-soft);
+    font-size: 0.95rem;
+}
+
+.dg-fallback-index-list {
+    columns: 2 16rem;
+    column-gap: 2rem;
+    padding-left: 1.15rem;
+    margin-top: 1.4rem;
+}
+
+.dg-fallback-index-list li {
+    margin-bottom: 0.5rem;
+    break-inside: avoid;
+}
+
+.dg-fallback-index-hint {
+    margin-top: 3rem;
+    padding: 1rem 1.2rem;
+    border-radius: var(--cabin-radius-m);
+    background-color: var(--cabin-surface);
+    border: 1px dashed var(--cabin-line-strong);
+    color: var(--cabin-ink-faint);
+    font-size: 0.86em;
+}
+
+/* Timestamps */
+.timestamps {
+    color: var(--cabin-ink-faint);
+    font-size: 0.78rem;
+}
+
+/* Marked text */
+mark {
+    background-color: var(--text-highlight-bg);
+    color: inherit;
+    border-radius: 4px;
+    padding: 0.05em 0.25em;
+}
+
+/* Math */
+mjx-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+/* Tags / headers spacing inside notes */
+.header-meta {
+    margin-top: 2px;
+}
+
+/* Site-wide link affordance for footerless pages (404) */
+.centered {
+    text-align: center;
+    color: var(--cabin-ink-soft);
+}
+
+.centered h1 {
+    color: var(--cabin-ink);
+}
+
+/* 404 page: a quiet dead end. */
+.not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 100vh;
+    padding: 40px 24px;
+    text-align: center;
+}
+
+.not-found-logo {
+    height: 62px;
+    width: auto;
+    border-radius: 16px;
+    margin-bottom: 18px;
+    box-shadow: var(--cabin-shadow);
+}
+
+.not-found h1 {
+    margin: 0 0 0.4em;
+    font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.1rem);
+    letter-spacing: -0.03em;
+}
+
+.not-found p {
+    margin: 0 0 1.6em;
+    color: var(--cabin-ink-soft);
+}
+
+.not-found-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 20px;
+    border-radius: 999px;
+    border: 1px solid var(--cabin-line-strong);
+    color: var(--cabin-ink) !important;
+    font-weight: 600;
+    font-size: 0.86rem;
+    text-decoration: none !important;
+    background-color: var(--cabin-surface);
+    box-shadow: var(--cabin-shadow-soft);
+    transition: border-color 160ms var(--cabin-ease),
+        color 160ms var(--cabin-ease);
+}
+
+.not-found-link:hover {
+    border-color: var(--cabin-amber);
+    color: var(--cabin-amber) !important;
+}
+
+/* Subtle entrance for the reading column. */
+@keyframes cabin-rise {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.content {
+    animation: cabin-rise 420ms var(--cabin-ease) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ---------------------------------------------------------------------
+   15. Responsive
+   ------------------------------------------------------------------ */
+
+@media (max-width: 1400px) {
+    body {
+        --dg-content-max-width: 720px;
+        --dg-sidebar-gap: 36px;
+        --dg-filetree-gap: 36px;
+    }
+}
+
+/* 1401–1580px: the three columns would otherwise push the rail past the
+   right edge, so narrow the reading column and the rail a touch. */
+@media (min-width: 1401px) and (max-width: 1580px) {
+    body {
+        --dg-content-max-width: 700px;
+        --dg-sidebar-max-width: 280px;
+        --dg-sidebar-gap: 32px;
+        --dg-graph-width: 248px;
+        --dg-graph-height: 196px;
+    }
+}
+
+@media (max-width: 800px) {
+    .navbar {
+        padding: 0 14px;
+        height: 60px;
+        --dg-navbar-height: 60px;
+    }
+
+    body {
+        --dg-content-font-size: 16.5px;
+        --dg-content-line-height: 1.78;
+        --dg-content-padding-top: 42px;
+        --dg-navbar-height: 60px;
+    }
+
+    .site-wordmark {
+        font-size: 1rem;
+    }
+
+    .navbar .site-logo {
+        height: var(--dg-logo-height-mobile);
+    }
+
+    .content {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .content header h1 {
+        font-size: 1.7rem;
+    }
+
+    .content h1 {
+        font-size: 1.55rem;
+    }
+
+    h2 {
+        font-size: 1.28rem;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+    }
+
+    .site-footer {
+        margin-top: 3rem;
+        padding: 1.8rem 18px 2.2rem;
+    }
+}
+
+/* Phones: content edge to edge, footer stacked. */
+@media (max-width: 520px) {
+    .site-footer-inner {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .content header h1 {
+        font-size: 1.55rem;
+    }
+
+    table {
+        font-size: 0.88rem;
+    }
+
+    th,
+    td {
+        padding: 0.5em 0.7em;
+    }
+}
+
+/* ---------------------------------------------------------------------
+   16. Print
+   ------------------------------------------------------------------ */
+
+@media print {
+    body.theme-light,
+    body.theme-dark {
+        background: #ffffff;
+        color: #111111;
+    }
+
+    .navbar,
+    .filetree-wrapper,
+    .sidebar,
+    .floating-actions,
+    .site-footer,
+    .search-container,
+    .page-panel-backdrop {
+        display: none !important;
+    }
+
+    .content {
+        margin: 0 auto;
+        padding-top: 0;
+        max-width: 100%;
+        animation: none;
+    }
 }

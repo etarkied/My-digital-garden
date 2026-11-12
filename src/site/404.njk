@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="{{ meta.mainLanguage }}" style="color-scheme: only {{ meta.baseTheme }}">
     <head>
-        <title>Nothing here</title>
+        <title>Nothing here · {{ meta.siteName }}</title>
         <link href="/styles/digital-garden-base.css" rel="stylesheet">
         {%-if meta.themeStyle%}
             <link href="/styles/obsidian-base.css" rel="stylesheet">
@@ -12,16 +12,16 @@
         {%endif%}
 
         <link href="/styles/custom-style.css" rel="stylesheet">
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     </head>
     <body class="theme-{{meta.baseTheme}} markdown-preview-view">
-        <div class="content centered">
-
-            {%-if not meta.themeStyle%}
-                <div class="font-bg"> &#x1F60E; </div>
-            {%endif%}
+        <div class="not-found">
+            {% if meta.siteLogoPath %}
+                <img class="not-found-logo" src="{{meta.siteLogoPath}}" alt="">
+            {% endif %}
             <h1>There is nothing here</h1>
-            <p>If you got here from a link, this note is probably not made public</p>
-            <a href="/">Go back home</a>
+            <p>If you got here from a link, this note is probably not made public.</p>
+            <a class="not-found-link" href="/">Go back to {{ meta.siteName }}</a>
         </div>
     </body>
 </html>

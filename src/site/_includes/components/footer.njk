@@ -1,0 +1,16 @@
+{#
+  Shared, site-wide footer. It closes every page so the reading column ends on
+  a quiet note instead of mid-air, and it carries the "Etar's" signature.
+  Styled in custom-style.scss.
+#}
+<footer class="site-footer">
+    <div class="site-footer-inner">
+        <span class="site-footer-mark">
+            {% if meta.siteLogoPath %}
+                <img class="site-footer-logo" src="{{meta.siteLogoPath}}" alt="" aria-hidden="true">
+            {% endif %}
+            <span class="site-footer-name">{{meta.siteName}}</span>
+        </span>
+        <span class="site-footer-meta">A quiet corner for notes, experiments &amp; half-finished thoughts.</span>
+    </div>
+</footer>

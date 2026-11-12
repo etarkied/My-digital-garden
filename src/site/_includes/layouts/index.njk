@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ meta.mainLanguage }}" style="color-scheme: only {{ meta.baseTheme }}">
   <head>
-    <title>{% if title %}{{ title }}{% else %}{{ page.fileSlug }}{% endif %}</title>
+    <title>{% if title %}{{ title }} · {% endif %}{{ meta.siteName }}</title>
     {%include "components/pageheader.njk"%}
     {% set slotName = "common.head" %}{% include "components/pluginSlot.njk" %}
     {% set slotName = "index.head" %}{% include "components/pluginSlot.njk" %}
@@ -68,6 +68,7 @@
       {%include "components/sidebar.njk" %}
     {%endif%}
     {% include "components/floatingActions.njk" %}
+    {% include "components/footer.njk" %}
 
     {% set slotName = "common.footer" %}{% include "components/pluginSlot.njk" %}
     {% set slotName = "index.footer" %}{% include "components/pluginSlot.njk" %}

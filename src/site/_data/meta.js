@@ -1,5 +1,21 @@
 require("dotenv").config();
+const fs = require("fs");
 const { globSync } = require("glob");
+
+// Brand marks ship with the template. SITE_LOGO overrides them with any path
+// relative to src/site (e.g. "logo.png"); "false"/"none" hides the mark.
+const BUILTIN_LOGO = "img/cabin-logo.svg";
+const BUILTIN_FAVICON = "img/cabin-logo.svg";
+
+function resolveSiteAsset(value) {
+  const setting = (value || "").trim();
+  if (/^(false|none|off)$/i.test(setting)) return "";
+  const relative = setting.replace(/^\/+/, "");
+  if (relative && fs.existsSync("src/site/" + relative)) {
+    return "/" + relative;
+  }
+  return "";
+}
 
 module.exports = async (data) => {
   let baseUrl = process.env.SITE_BASE_URL || "";
@@ -20,6 +36,11 @@ module.exports = async (data) => {
     // Use the first match and convert to site-relative path
     logoPath = "/" + logoFiles[0].split("src/site/")[1];
   }
+  // Precedence: an uploaded logo (the plugin writes logo.* to the site root),
+  // then SITE_LOGO, then the template's built-in cabin mark.
+  logoPath = logoPath || resolveSiteAsset(process.env.SITE_LOGO) || "/" + BUILTIN_LOGO;
+  const faviconPath =
+    resolveSiteAsset(process.env.SITE_FAVICON) || "/" + BUILTIN_FAVICON;
 
   // Logo height override. A bare number means pixels; any other value must
   // be a simple CSS length (e.g. "3rem") — anything else is ignored so the
@@ -117,6 +138,7 @@ module.exports = async (data) => {
     baseTheme: process.env.BASE_THEME || "dark",
     siteName: process.env.SITE_NAME_HEADER || "Digital Garden",
     siteLogoPath: logoPath,
+    siteFaviconPath: faviconPath,
     logoHeight,
     mainLanguage: process.env.SITE_MAIN_LANGUAGE || "en",
     siteBaseUrl: baseUrl,

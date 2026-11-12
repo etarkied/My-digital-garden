@@ -1,244 +1,49 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="img/digital-garden-dark.svg">
-    <img src="img/digital-garden.svg" alt="Digital Garden logo" width="128" height="128">
-  </picture>
+  <img src="src/site/img/cabin-logo.svg" alt="Etar's Note Cabin logo" width="96" height="96">
 </p>
 
-# Digital Obsidian Garden
-This is the template to be used together with the [Digital Garden Obsidian Plugin](https://github.com/oleeskild/Obsidian-Digital-Garden).
-See the README in the plugin repo for information on how to set it up.
+# Etar's Note Cabin
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/oleeskild/digitalgarden)
+我的个人数字花园。本地 [Obsidian](https://obsidian.md) 笔记用
+[Digital Garden 插件](https://github.com/oleeskild/Obsidian-Digital-Garden) 发布到本仓库，
+再由 Cloudflare Pages 自动构建托管。
 
----
-## Docs
-Docs are available at [docs.forestry.md](https://docs.forestry.md/)
+> A quiet corner for notes, experiments & half-finished thoughts.
 
----
-## Plugins
+## Where the design lives
 
-The garden is extensible through plugins: directories under `src/plugins/`
-that add markup to layout slots, site-wide styles and scripts, and
-build-time Eleventy/markdown-it hooks. Core features like search
-(`dg-search`), link previews (`dg-link-preview`), timestamps
-(`dg-timestamps`), and math (`dg-math`) are themselves plugins built on
-this API — `dg-link-preview` is the smallest one to read first.
+| File | What it does |
+| --- | --- |
+| [`src/site/styles/custom-style.scss`](src/site/styles/custom-style.scss) | 全部视觉：配色、字体、导航栏、文件树、正文、表格、代码、搜索、页脚、响应式 |
+| [`src/site/img/cabin-logo.svg`](src/site/img/cabin-logo.svg) | 小屋标志，导航栏 / 文件树 / 404 / 页脚共用 |
+| [`src/site/favicon.svg`](src/site/favicon.svg) | 浏览器图标（构建时自动生成 ico / png） |
+| [`src/site/_includes/components/navbar.njk`](src/site/_includes/components/navbar.njk) | 无文件树时的顶栏（标志 + 「Etar's Note Cabin」） |
+| [`src/site/_includes/components/footer.njk`](src/site/_includes/components/footer.njk) | 站点页脚 |
+| [`src/plugins/dg-filetree/templates/filetree.njk`](src/plugins/dg-filetree/templates/filetree.njk) | 左侧文件树里的同款标志 |
+| [`.env`](.env) | 站点名、语言、主题开关 |
 
-- Docs (installing plugins, writing your own): [docs.forestry.md](https://docs.forestry.md/)
-- Reference code: the first-party plugins under [`src/plugins/`](src/plugins/)
-- Building plugins with an AI agent: this repo ships a
-  [`garden-plugin-author` skill](skills/garden-plugin-author/SKILL.md) in
-  the open [Agent Skills](https://skills.sh) format, teaching agents how
-  to create, test, and publish garden plugins. Install it into any
-  harness (Claude Code, Cursor, Codex, …) with:
+站点标题由 `.env` 里的 `SITE_NAME_HEADER` 控制，也可在 Obsidian 插件的
+**Publication Center → Site → Appearance** 里改「Site name」。
 
-  ```sh
-  npx skills add oleeskild/digitalgarden
-  ```
+## Notes on the setup
 
-To try a third-party plugin manually, drop its directory into
-`src/plugins/` — a valid `garden-plugin.json` is all it takes. Disable any
-plugin via `src/plugins/plugins.json` (`{"plugins": {"dg-search": {"enabled": false}}}`).
-Only install plugins from authors you trust: plugin code runs in your site
-build and in your visitors' browsers.
+- **Theme**：当前 `.env` 不引用任何 Obsidian 社区主题，因此自定义样式不会被主题覆盖。
+  若想让某个主题生效，在 `THEME=` 填入其 `theme.css` 直链即可——
+  `custom-style.scss` 里的配色变量在所有主题下都会生效。
+- **Logo / Favicon**：仓库自带，无需在插件上传。插件里若上传了自己的图片会优先显示。
+- **Updating the template**：`custom-style.scss`、`navbar.njk`、`footer.njk`、
+  `cabin-logo.svg` 是本站自行改造的部分，插件升级模板时请保留它们；
+  `style.scss`、`digital-garden-base.scss` 仍保持模板原样。
 
----
-## CSS Variables
+## 本地预览
 
-The digital garden is fully customizable through CSS variables. Override these in `src/site/styles/custom-style.scss` to customize your garden's appearance.
-
-### How to Customize
-
-Add your overrides to `custom-style.scss`:
-
-```scss
-body {
-    --dg-content-max-width: 800px;
-    --dg-content-font-size: 16px;
-    --dg-sidebar-max-width: 400px;
-}
+```sh
+npm install
+npm run build
+# 然后把 dist/ 用任意静态服务器打开，例如：
+npx serve dist
 ```
 
-### Responsive Layout Notes
+## Docs
 
-- Content will never overlap the filetree, regardless of `--dg-content-max-width` value
-- The right sidebar (TOC/graph/backlinks) automatically hides when there isn't enough viewport space
-- To make the sidebar appear at smaller viewports, reduce `--dg-sidebar-max-width`
-
-### Available Variables
-
-#### Color Variables
-You can override the base Obsidian theme color variables directly:
-
-| Variable | Description |
-|----------|-------------|
-| `--text-normal` | Normal text color |
-| `--text-muted` | Muted/secondary text |
-| `--text-faint` | Faint text |
-| `--text-accent` | Accent color |
-| `--text-accent-hover` | Accent hover color |
-| `--link-color` | Link color |
-| `--link-color-hover` | Link color hover |
-| `--link-unresolved-color` | Link color unresolved |
-| `--link-unresolved-opacity` | Link color unresolved opacity |
-| `--background-primary` | Primary background |
-| `--background-primary-alt` | Alt primary background |
-| `--background-secondary` | Secondary background |
-| `--background-secondary-alt` | Alt secondary background |
-| `--interactive-normal` | Interactive element color |
-| `--interactive-hover` | Interactive hover color |
-| `--interactive-accent` | Interactive accent |
-| `--interactive-accent-hover` | Interactive accent hover |
-
-#### Layout Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `--dg-content-max-width` | `700px` | Maximum width of content area |
-| `--dg-content-margin-top` | `90px` | Top margin for content |
-| `--dg-content-margin-top-mobile` | `75px` | Top margin on mobile |
-| `--dg-content-font-size` | `18px` | Base font size for content |
-| `--dg-content-line-height` | `1.5` | Line height for content |
-
-#### Sidebar (Right) Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `--dg-sidebar-top` | `75px` | Sidebar top offset |
-| `--dg-sidebar-gap` | `80px` | Gap between content and sidebar |
-| `--dg-sidebar-min-width` | `25px` | Minimum sidebar width |
-| `--dg-sidebar-max-width` | `350px` | Maximum sidebar width |
-| `--dg-sidebar-container-padding` | `20px` | Sidebar container padding |
-| `--dg-sidebar-container-height` | `87%` | Sidebar container height |
-
-#### Graph Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `--dg-graph-width` | `250px` | Local graph width |
-| `--dg-graph-height` | `250px` | Local graph height |
-| `--dg-graph-border-radius` | `10px` | Graph border radius |
-| `--dg-graph-margin-bottom` | `20px` | Graph bottom margin |
-| `--dg-graph-fullscreen-width` | `90vw` | Expanded/global graph width |
-| `--dg-graph-fullscreen-height` | `85vh` | Expanded/global graph height |
-| `--dg-graph-node-color` | `var(--text-accent)` | Active/current node color |
-| `--dg-graph-node-color-muted` | `var(--text-faint)` | Neighbor node color |
-| `--dg-graph-label-color` | `var(--text-normal)` | Node label text color |
-| `--dg-graph-bg` | `var(--background-primary)` | Graph background color |
-| `--dg-graph-border-color` | `var(--background-secondary)` | Graph border color |
-
-#### Filetree (Left Sidebar) Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `--dg-filetree-width` | `250px` | Filetree sidebar width |
-| `--dg-filetree-min-width` | `250px` | Minimum filetree width |
-| `--dg-filetree-padding` | `10px 20px` | Filetree padding |
-| `--dg-filetree-gap` | `80px` | Gap from content |
-| `--dg-filetree-title-size` | `32px` | Filetree title font size |
-
-#### TOC (Table of Contents) Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `--dg-toc-padding` | `5px` | TOC container padding |
-| `--dg-toc-font-size` | `0.9rem` | TOC font size |
-| `--dg-toc-max-height` | `220px` | TOC max height |
-| `--dg-toc-title-size` | `1.2rem` | TOC title font size |
-| `--dg-toc-item-padding` | `2px 0 2px 8px` | TOC item padding |
-| `--dg-toc-indent` | `1em` | TOC nested list indent |
-
-#### Backlinks Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `--dg-backlinks-margin-top` | `10px` | Backlinks section top margin |
-| `--dg-backlinks-max-height` | `250px` | Backlinks list max height |
-| `--dg-backlinks-title-size` | `0.9rem` | Backlinks title font size |
-| `--dg-backlinks-card-size` | `0.85rem` | Backlink card font size |
-| `--dg-backlinks-card-padding` | `6px 0` | Backlink card padding |
-| `--dg-backlinks-icon-size` | `14px` | Backlink icon size |
-
-#### Search Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `--dg-search-box-width` | `900px` | Search box width |
-| `--dg-search-box-max-width` | `80%` | Search box max width |
-| `--dg-search-box-radius` | `15px` | Search box border radius |
-| `--dg-search-box-padding` | `10px` | Search box padding |
-| `--dg-search-input-size` | `2rem` | Search input font size |
-| `--dg-search-input-padding` | `10px` | Search input padding |
-| `--dg-search-input-radius` | `5px` | Search input border radius |
-| `--dg-search-results-max-height` | `50vh` | Search results max height |
-| `--dg-search-result-size` | `1.2rem` | Search result font size |
-| `--dg-search-result-radius` | `10px` | Search result border radius |
-| `--dg-search-link-size` | `1.4rem` | Search link font size |
-
-#### Search Button Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `--dg-search-btn-radius` | `8px` | Search button border radius |
-| `--dg-search-btn-height` | `32px` | Search button height |
-| `--dg-search-btn-padding` | `0 10px` | Search button padding |
-| `--dg-search-btn-gap` | `8px` | Search button icon/text gap |
-| `--dg-search-btn-font-size` | `0.85rem` | Search button font size |
-| `--dg-search-btn-icon-size` | `14px` | Search button icon size |
-
-#### Navbar Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `--dg-navbar-title-size-mobile` | `18px` | Navbar title size on mobile |
-| `--dg-navbar-search-margin` | `20px` | Navbar search button margin |
-| `--dg-navbar-search-min-width` | `36px` | Navbar search min width |
-| `--dg-logo-height` | `40px` | Site logo height on desktop |
-| `--dg-logo-height-mobile` | `32px` | Site logo height on mobile |
-| `--dg-logo-margin` | `10px 15px` | Site logo margin |
-| `--dg-filetree-logo-height` | `70px` | Site logo height in filetree sidebar |
-
-#### Note Link / Filetree Item Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `--dg-notelink-padding` | `4px 8px 4px 12px` | Note link padding |
-| `--dg-notelink-size` | `0.85rem` | Note link font size |
-| `--dg-notelink-border-width` | `2px` | Note link left border width |
-| `--dg-notelink-hover-bg` | `rgba(255, 255, 255, 0.05)` | Note link hover background |
-| `--dg-folder-margin` | `4px 0 4px 2px` | Folder name margin |
-| `--dg-folder-icon-size` | `14px` | Folder icon size |
-| `--dg-inner-folder-padding` | `3px 0 3px 0` | Inner folder padding |
-| `--dg-inner-folder-margin` | `12px` | Inner folder left margin |
-| `--dg-filelist-margin` | `8px` | File list left margin |
-
-#### Graph Controls Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `--dg-graph-ctrl-padding` | `6px 10px` | Graph controls padding |
-| `--dg-graph-ctrl-radius` | `6px` | Graph controls border radius |
-| `--dg-graph-ctrl-margin` | `10px` | Graph controls margin |
-| `--dg-graph-ctrl-size` | `0.7rem` | Graph controls font size |
-| `--dg-graph-ctrl-icon-size` | `14px` | Graph control icon size |
-| `--dg-graph-ctrl-gap` | `10px` | Graph controls gap |
-
-#### Timestamps Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `--dg-timestamps-size` | `0.8em` | Timestamps font size |
-| `--dg-timestamps-gap` | `10px` | Timestamps gap |
-| `--dg-timestamps-margin-top` | `20px` | Timestamps top margin |
-
-#### Misc Component Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `--dg-overlay-bg` | `rgba(0, 0, 0, 0.5)` | Overlay background color |
-| `--dg-mermaid-radius` | `25px` | Mermaid diagram border radius |
-| `--dg-mermaid-padding` | `10px` | Mermaid diagram padding |
-| `--dg-transclusion-padding` | `8px` | Transclusion container padding |
-| `--dg-external-link-icon-size` | `13px` | External link icon size |
-| `--dg-external-link-padding` | `16px` | External link right padding |
+Digital Garden 模板文档：[docs.forestry.md](https://docs.forestry.md/)

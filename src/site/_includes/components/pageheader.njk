@@ -38,6 +38,17 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css" integrity="sha512-mIs9kKbaw6JZFfSuo+MovjU+Ntggfoj8RwAmJbVXQ5mkAX5LlgETQEweFPI18humSPHymTb5iikEOKWF7I8ncQ==" crossorigin="anonymous" referrerpolicy="no-referrer" async/>
 <script src="https://fastly.jsdelivr.net/npm/whatwg-fetch@3.6.2/dist/fetch.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer" async></script>
 
+{# Class on <html> before first paint: makes the two in-progress styles
+   (hover strokes, link underlines) wait a beat after load, so the browser
+   doesn't animate a cascade of them while the page renders. #}
+<script>
+    (function () {
+        var add = function () { document.documentElement.classList.add('dg-loaded'); };
+        if (document.readyState === 'complete') { setTimeout(add, 500); }
+        else { window.addEventListener('load', function () { setTimeout(add, 500); }); }
+    })();
+</script>
+
 {%-if meta.themeStyle%}
     <link href="/styles/obsidian-base.css" rel="stylesheet">
     <link href="{{meta.themeStyle}}" rel="stylesheet">
@@ -59,6 +70,12 @@
 {%- endfor -%}
 
 {% favicons './.cache/favicon.normalized.svg', appleIconBgColor='#123' %}
+
+<link rel="icon" type="image/svg+xml" href="{{ meta.siteFaviconPath }}">
+<link rel="apple-touch-icon" href="{{ meta.siteFaviconPath }}">
+<meta name="theme-color" content="#1b130e" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fbf5ea" media="(prefers-color-scheme: light)">
+<meta name="description" content="{{ meta.siteName }}{% if title %} · {{ title }}{% endif %} — a personal digital garden of notes, experiments and ideas.">
 
 {% if meta.styleSettingsCss %}
     <style>

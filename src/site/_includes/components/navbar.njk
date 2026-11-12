@@ -1,12 +1,11 @@
 {%if settings.dgHomeLink === true%}
     <nav class="navbar">
         <div class="navbar-inner">
-            <a href="/" style="text-decoration: none;">
+            <a href="/" class="site-brand" title="{{meta.siteName}}">
                 {% if meta.siteLogoPath %}
-                    <img class="site-logo" src="{{meta.siteLogoPath}}" alt="{{meta.siteName}}">
-                {% else %}
-                    <h1 style="margin: 15px !important;">{{meta.siteName}}</h1>
+                    <img class="site-logo" src="{{meta.siteLogoPath}}" alt="" aria-hidden="true">
                 {% endif %}
+                <span class="site-wordmark">{{meta.siteName}}</span>
             </a>
         </div>
         <div class="navbar-actions">
