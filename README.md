@@ -27,6 +27,9 @@
 
 ## Notes on the setup
 
+- **Palette**：深色主题取材于 GitHub 深色模式（`#0d1117` 背景 / `#161b22` 卡片 /
+  `#30363d` 边框 / `#e6edf3` 文字 / `#58a6ff` 链接），浅色主题对应 GitHub 浅色模式。
+  所有颜色都在 `custom-style.scss` 顶部的 `body.theme-dark` / `body.theme-light` 变量块里。
 - **Theme**：当前 `.env` 不引用任何 Obsidian 社区主题，因此自定义样式不会被主题覆盖。
   若想让某个主题生效，在 `THEME=` 填入其 `theme.css` 直链即可——
   `custom-style.scss` 里的配色变量在所有主题下都会生效。

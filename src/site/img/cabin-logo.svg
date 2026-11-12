@@ -1,44 +1,46 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Etar's Note Cabin">
   <defs>
     <linearGradient id="cabinBadge" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#F4C98A"/>
-      <stop offset="0.55" stop-color="#E9A96B"/>
-      <stop offset="1" stop-color="#D9835B"/>
+      <stop offset="0" stop-color="#1f6feb"/>
+      <stop offset="1" stop-color="#388bfd"/>
+    </linearGradient>
+    <linearGradient id="cabinGlow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
     </linearGradient>
     <clipPath id="cabinClip">
-      <rect x="2" y="2" width="60" height="60" rx="17" ry="17"/>
+      <rect x="2" y="2" width="60" height="60" rx="14" ry="14"/>
     </clipPath>
   </defs>
 
-  <rect x="2" y="2" width="60" height="60" rx="17" ry="17" fill="url(#cabinBadge)"/>
+  <rect x="2" y="2" width="60" height="60" rx="14" ry="14" fill="url(#cabinBadge)"/>
+  <rect x="2" y="2" width="60" height="60" rx="14" ry="14" fill="url(#cabinGlow)"/>
 
-  <g clip-path="url(#cabinClip)">
+  <g clip-path="url(#cabinClip)" fill="#ffffff" fill-opacity="0.82">
     <!-- far pines -->
-    <path d="M13.5 38.5 19 30l5.5 8.5H13.5Z" fill="rgba(41,26,17,0.24)"/>
-    <path d="M40 41.5 45 34l5 7.5H40Z" fill="rgba(41,26,17,0.20)"/>
+    <path d="M13.5 39.5 19 31l5.5 8.5H13.5Z" fill-opacity="0.42"/>
+    <path d="M40 42.5 45 35l5 7.5H40Z" fill-opacity="0.34"/>
     <!-- near pine -->
-    <path d="M12 44 19 34l7 10H12Z" fill="rgba(41,26,17,0.30)"/>
-    <rect x="18" y="44" width="2" height="4" fill="rgba(41,26,17,0.30)"/>
+    <path d="M11.5 45 19 34.5l7.5 10.5H11.5Z" fill-opacity="0.5"/>
+    <rect x="18" y="45" width="2" height="4" fill-opacity="0.5"/>
 
     <!-- chimney -->
-    <rect x="41" y="20.6" width="3.2" height="6" rx="0.6" fill="#3B2B24"/>
-    <!-- cabin roof -->
-    <path d="M32 16.5 49.5 33h-35L32 16.5Z" fill="#3B2B24"/>
-    <!-- eaves -->
-    <rect x="12.6" y="32.4" width="38.8" height="2.4" rx="1.2" fill="#2E211D"/>
+    <rect x="41" y="20.6" width="3.2" height="6" rx="0.6"/>
+    <!-- roof + eaves -->
+    <path d="M32 16 50 33H14L32 16Z"/>
+    <rect x="12.4" y="32.2" width="39.2" height="2.6" rx="1.3"/>
 
     <!-- cabin body -->
-    <rect x="17.5" y="34.8" width="29" height="15.7" rx="1.6" fill="#FFF6E5"/>
+    <rect x="17.6" y="34.8" width="28.8" height="15.9" rx="1.8" fill-opacity="0.92"/>
 
-    <!-- door -->
-    <path d="M31 38.2c2.4 0 4.3 1.9 4.3 4.3V50h-8.6v-7.5c0-2.4 1.9-4.3 4.3-4.3Z" fill="#B5654A"/>
-    <circle cx="34" cy="45.2" r="0.9" fill="#F4C98A"/>
+    <!-- door cut out of the lighter face -->
+    <path d="M31 37.9c2.4 0 4.3 1.9 4.3 4.3V50h-8.6v-7.8c0-2.4 1.9-4.3 4.3-4.3Z" fill="#1f6feb"/>
 
-    <!-- lit windows -->
-    <rect x="20.6" y="39.2" width="6.2" height="5.4" rx="1" fill="#F2B23E"/>
-    <rect x="37.2" y="39.2" width="6.2" height="5.4" rx="1" fill="#F2B23E"/>
+    <!-- windows: the light in the cabin -->
+    <rect x="20.4" y="39" width="6.4" height="5.6" rx="1.2" fill="#ffd33d"/>
+    <rect x="37.2" y="39" width="6.4" height="5.6" rx="1.2" fill="#ffd33d"/>
 
-    <!-- ground -->
-    <path d="M9 50.6h46v7.4H9z" fill="rgba(41,26,17,0.22)"/>
+    <!-- ground line -->
+    <rect x="8" y="50.4" width="48" height="1.8" rx="0.9" fill-opacity="0.35"/>
   </g>
 </svg>

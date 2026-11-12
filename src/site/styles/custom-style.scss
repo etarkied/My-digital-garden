@@ -1,6 +1,6 @@
 /* =====================================================================
    Etar's Note Cabin
-   A warm, quiet reading room for notes.
+   GitHub-flavoured dark (and light) reading room for notes.
 
    This is custom-style.scss: the template keeps this file across updates,
    so every visual decision for the garden lives here.
@@ -79,7 +79,7 @@ body {
     --dg-search-input-radius: 10px;
     --dg-search-result-radius: 10px;
     --dg-search-divider-color: var(--cabin-line);
-    --dg-search-highlight-bg: rgba(211, 145, 74, 0.22);
+    --dg-search-highlight-bg: rgba(247, 129, 102, 0.25);
 
     /* Tags / callouts */
     --callout-radius: var(--cabin-radius-m);
@@ -92,40 +92,39 @@ body {
 }
 
 /* ---------------------------------------------------------------------
-   2. Palette — warm parchment by day, an oil lamp at night
+   2. Palette — GitHub dark (and GitHub light), using GitHub's own colours:
+   canvas #0d1117, surface #161b22, border #30363d, text #e6edf3,
+   muted #8d96a0, link #58a6ff, green #3fb950, amber #d29922, purple #bc8cff.
    ------------------------------------------------------------------ */
 
 body.theme-light {
     color-scheme: light;
 
-    --cabin-canvas: #f6efe3;
-    --cabin-canvas-deep: #efe5d5;
-    --cabin-surface: #fffaf1;
-    --cabin-surface-soft: #fbf4e8;
-    --cabin-ink: #2a211a;
-    --cabin-ink-soft: #57473b;
-    --cabin-ink-faint: #8b7767;
-    --cabin-amber: #a8642f;
-    --cabin-amber-soft: #c98648;
-    --cabin-amber-wash: rgba(168, 100, 47, 0.1);
-    --cabin-pine: #4c6b52;
-    --cabin-line: #e7dccb;
-    --cabin-line-strong: #d9c9b1;
-    --cabin-hover: rgba(168, 100, 47, 0.08);
-    --cabin-shadow: 0 18px 40px -24px rgba(72, 46, 26, 0.35);
-    --cabin-shadow-soft: 0 2px 10px -4px rgba(72, 46, 26, 0.25);
-    --cabin-glow: radial-gradient(
-        1200px 420px at 50% -80px,
-        rgba(226, 178, 112, 0.22),
-        transparent 70%
-    );
+    /* GitHub light */
+    --cabin-canvas: #ffffff;
+    --cabin-canvas-deep: #f6f8fa;
+    --cabin-surface: #ffffff;
+    --cabin-surface-soft: #f6f8fa;
+    --cabin-ink: #1f2328;
+    --cabin-ink-soft: #656d76;
+    --cabin-ink-faint: #848d97;
+    --cabin-amber: #0969da;
+    --cabin-amber-soft: #218bff;
+    --cabin-amber-wash: rgba(9, 105, 218, 0.09);
+    --cabin-pine: #1a7f37;
+    --cabin-line: #d1d9e0;
+    --cabin-line-strong: #b7c0c8;
+    --cabin-hover: rgba(31, 35, 40, 0.06);
+    --cabin-shadow: 0 8px 24px rgba(140, 149, 159, 0.2);
+    --cabin-shadow-soft: 0 1px 3px rgba(31, 35, 40, 0.12);
+    --cabin-glow: none;
 
     --background-primary: var(--cabin-canvas);
     --background-primary-alt: var(--cabin-surface-soft);
-    --background-secondary: #f1e8d9;
-    --background-secondary-alt: #ece1cf;
+    --background-secondary: #f6f8fa;
+    --background-secondary-alt: #eff2f5;
     --surface: var(--cabin-surface);
-    --surface-inset: #f2e9da;
+    --surface-inset: #eff2f5;
     --background-modifier-border: var(--cabin-line);
     --background-modifier-hover: var(--cabin-hover);
 
@@ -133,18 +132,18 @@ body.theme-light {
     --text-muted: var(--cabin-ink-soft);
     --text-faint: var(--cabin-ink-faint);
     --text-accent: var(--cabin-amber);
-    --text-accent-hover: #8f5123;
-    --text-on-accent: #fffaf1;
+    --text-accent-hover: #0550ae;
+    --text-on-accent: #ffffff;
 
     --interactive-accent: var(--cabin-amber);
-    --interactive-accent-hover: #8f5123;
-    --interactive-normal: #f2e9da;
-    --interactive-hover: #eae0ce;
+    --interactive-accent-hover: #0550ae;
+    --interactive-normal: #f6f8fa;
+    --interactive-hover: #eff2f5;
 
     --link-color: var(--cabin-amber);
-    --link-color-hover: #8f5123;
-    --text-selection: rgba(211, 145, 74, 0.25);
-    --text-highlight-bg: rgba(226, 178, 112, 0.45);
+    --link-color-hover: #0550ae;
+    --text-selection: rgba(84, 174, 255, 0.28);
+    --text-highlight-bg: rgba(255, 213, 0, 0.4);
     --rule: var(--cabin-line-strong);
     --accent-wash: var(--cabin-amber-wash);
 }
@@ -152,34 +151,31 @@ body.theme-light {
 body.theme-dark {
     color-scheme: dark;
 
-    --cabin-canvas: #17120e;
-    --cabin-canvas-deep: #120e0b;
-    --cabin-surface: #1e1813;
-    --cabin-surface-soft: #221b15;
-    --cabin-ink: #ede2d3;
-    --cabin-ink-soft: #b6a695;
-    --cabin-ink-faint: #877665;
-    --cabin-amber: #e6a465;
-    --cabin-amber-soft: #f0bd8a;
-    --cabin-amber-wash: rgba(230, 164, 101, 0.1);
-    --cabin-pine: #93b18c;
-    --cabin-line: #322820;
-    --cabin-line-strong: #43362b;
-    --cabin-hover: rgba(230, 164, 101, 0.07);
-    --cabin-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.8);
-    --cabin-shadow-soft: 0 2px 12px -4px rgba(0, 0, 0, 0.6);
-    --cabin-glow: radial-gradient(
-        1100px 420px at 50% -80px,
-        rgba(196, 128, 70, 0.12),
-        transparent 70%
-    );
+    /* GitHub dark */
+    --cabin-canvas: #0d1117;
+    --cabin-canvas-deep: #010409;
+    --cabin-surface: #161b22;
+    --cabin-surface-soft: #21262d;
+    --cabin-ink: #e6edf3;
+    --cabin-ink-soft: #9198a1;
+    --cabin-ink-faint: #656d76;
+    --cabin-amber: #58a6ff;
+    --cabin-amber-soft: #79c0ff;
+    --cabin-amber-wash: rgba(56, 139, 253, 0.15);
+    --cabin-pine: #3fb950;
+    --cabin-line: #30363d;
+    --cabin-line-strong: #444c56;
+    --cabin-hover: rgba(177, 186, 196, 0.12);
+    --cabin-shadow: 0 8px 24px rgba(1, 4, 9, 0.65);
+    --cabin-shadow-soft: 0 1px 3px rgba(1, 4, 9, 0.6);
+    --cabin-glow: none;
 
     --background-primary: var(--cabin-canvas);
-    --background-primary-alt: var(--cabin-surface-soft);
-    --background-secondary: #1b1511;
-    --background-secondary-alt: #221b15;
+    --background-primary-alt: var(--cabin-surface);
+    --background-secondary: #161b22;
+    --background-secondary-alt: #21262d;
     --surface: var(--cabin-surface);
-    --surface-inset: #251d17;
+    --surface-inset: #21262d;
     --background-modifier-border: var(--cabin-line);
     --background-modifier-hover: var(--cabin-hover);
 
@@ -188,17 +184,17 @@ body.theme-dark {
     --text-faint: var(--cabin-ink-faint);
     --text-accent: var(--cabin-amber);
     --text-accent-hover: var(--cabin-amber-soft);
-    --text-on-accent: #241704;
+    --text-on-accent: #ffffff;
 
     --interactive-accent: var(--cabin-amber);
     --interactive-accent-hover: var(--cabin-amber-soft);
-    --interactive-normal: #251d17;
-    --interactive-hover: #2d241c;
+    --interactive-normal: #21262d;
+    --interactive-hover: #30363d;
 
     --link-color: var(--cabin-amber);
     --link-color-hover: var(--cabin-amber-soft);
-    --text-selection: rgba(230, 164, 101, 0.22);
-    --text-highlight-bg: rgba(230, 164, 101, 0.3);
+    --text-selection: rgba(56, 139, 253, 0.3);
+    --text-highlight-bg: rgba(187, 128, 9, 0.35);
     --rule: var(--cabin-line-strong);
     --accent-wash: var(--cabin-amber-wash);
 }
@@ -297,22 +293,22 @@ body {
     height: var(--dg-logo-height);
     width: auto;
     margin: 0;
-    border-radius: 10px;
+    border-radius: 6px;
     flex-shrink: 0;
-    box-shadow: 0 4px 12px -6px rgba(90, 50, 20, 0.55);
+    box-shadow: var(--cabin-shadow-soft);
     transition: transform 220ms var(--cabin-ease);
 }
 
 .site-brand:hover .site-logo {
-    transform: translateY(-1px) rotate(-2deg);
+    transform: translateY(-1px);
 }
 
 .site-wordmark {
     font-family: var(--cabin-font-display);
-    font-weight: 700;
-    font-size: 1.06rem;
-    letter-spacing: -0.015em;
-    line-height: 1.1;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: -0.005em;
+    line-height: 1.2;
     color: var(--cabin-ink);
     white-space: nowrap;
     overflow: hidden;
@@ -400,18 +396,26 @@ body {
     color: currentColor;
 }
 
-.navbar .search-keys {
-    background-color: var(--cabin-hover);
-    border-radius: 6px;
-    padding: 2px 7px;
+/* GitHub-style shortcut labels: small, bordered, monospaced keys. */
+.search-keys {
+    background: none !important;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
     color: var(--cabin-ink-faint);
 }
 
-.navbar .search-keys code {
-    background: none;
-    padding: 0;
-    font-size: 0.68rem;
-    color: inherit;
+.search-keys code {
+    display: inline-block;
+    background-color: var(--cabin-surface-soft);
+    border: 1px solid var(--cabin-line);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-family: var(--cabin-font-mono);
+    font-size: 0.66rem;
+    line-height: 1.35;
+    color: var(--cabin-ink-soft);
 }
 
 .navbar .page-panel-toggle {
@@ -497,14 +501,15 @@ body {
 
 .site-brand-stacked .site-logo {
     height: var(--dg-filetree-logo-height);
-    border-radius: 12px;
-    box-shadow: 0 8px 18px -12px rgba(70, 40, 15, 0.7);
+    border-radius: 8px;
+    box-shadow: var(--cabin-shadow-soft);
 }
 
 .site-brand-stacked .site-wordmark {
-    font-size: 1.42rem;
-    line-height: 1.15;
-    letter-spacing: -0.028em;
+    font-size: 1.16rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
     white-space: normal;
     overflow: visible;
     text-overflow: clip;
@@ -517,21 +522,23 @@ body {
 
 .filetree-sidebar .search-button {
     width: 100%;
-    height: 40px;
-    margin: 16px 0 18px;
-    padding: 0 12px;
-    border-radius: 10px;
+    height: 32px;
+    margin: 14px 0 14px;
+    padding: 0 10px;
+    border-radius: 6px;
     border: 1px solid var(--cabin-line);
-    background-color: var(--cabin-surface);
+    background-color: var(--cabin-surface-soft);
     color: var(--cabin-ink-soft);
+    font-size: 0.8rem;
     transition: border-color 160ms var(--cabin-ease),
-        box-shadow 160ms var(--cabin-ease), color 160ms var(--cabin-ease);
+        background-color 160ms var(--cabin-ease),
+        color 160ms var(--cabin-ease);
 }
 
 .filetree-sidebar .search-button:hover {
     border-color: var(--cabin-line-strong);
+    background-color: var(--cabin-hover);
     color: var(--cabin-ink);
-    box-shadow: var(--cabin-shadow-soft);
 }
 
 .filetree-sidebar > .folder {
@@ -541,14 +548,20 @@ body {
 
 /* -- Tree items -- */
 
-.foldername-wrapper {
+/* .align-icon (template) is justify-content: space-evenly, which shoves the
+   chevron away from the folder name. Folders read as a tight icon + label. */
+.foldername-wrapper,
+.foldername-wrapper.align-icon {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 6px 10px;
+    justify-content: flex-start;
+    gap: 7px;
+    padding: 5px 10px;
     margin: 2px 0;
-    border-radius: 8px;
+    border-radius: 6px;
     font-weight: 600;
+    font-size: 0.82rem;
+    line-height: 1.4;
     color: var(--cabin-ink-soft);
     transition: background-color 140ms var(--cabin-ease),
         color 140ms var(--cabin-ease);
@@ -561,18 +574,26 @@ body {
 
 .foldername-wrapper i,
 .foldername-wrapper svg {
-    width: 14px;
-    height: 14px;
-    opacity: 0.55;
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    opacity: 0.6;
     color: var(--cabin-ink-faint);
     flex-shrink: 0;
 }
 
+.foldername-wrapper .foldername {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .notelink {
-    border-radius: 8px;
-    border-left: var(--dg-notelink-border-width) solid transparent;
+    border-radius: 6px;
+    /* A rounded border-left would bow into a crescent; use an inset bar. */
+    border-left: 0;
     margin: 1px 0;
-    padding: 5px 10px 5px 12px;
+    padding: 4px 10px 4px 12px;
     transition: background-color 140ms var(--cabin-ease),
         color 140ms var(--cabin-ease);
 }
@@ -581,6 +602,8 @@ body {
     color: var(--cabin-ink-soft) !important;
     text-decoration: none !important;
     width: 100%;
+    font-size: 0.82rem;
+    line-height: 1.5;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -597,13 +620,15 @@ body {
 }
 
 .notelink.active-note {
-    border-left-color: var(--cabin-amber);
     background-color: var(--cabin-amber-wash);
+    /* Flat left edge so the inset bar stays a straight line, not a crescent. */
+    border-radius: 0 6px 6px 0;
+    box-shadow: inset 2px 0 0 var(--cabin-amber);
 }
 
 .notelink.active-note .filename {
     color: var(--cabin-ink) !important;
-    font-weight: 700;
+    font-weight: 500;
 }
 
 /* Root-level notes align with folder labels. */
@@ -637,7 +662,7 @@ body {
 
     .fullpage-overlay {
         top: var(--dg-navbar-height);
-        background-color: color-mix(in srgb, #120c08 55%, transparent);
+        background-color: color-mix(in srgb, #010409 60%, transparent);
         backdrop-filter: blur(3px);
         -webkit-backdrop-filter: blur(3px);
     }
@@ -929,21 +954,23 @@ code {
 
 pre[class*="language-"],
 pre {
-    background-color: #14100c !important;
-    color: #e9dccb;
-    border: 1px solid #241d16;
+    background-color: #161b22 !important;
+    color: #e6edf3;
+    border: 1px solid #30363d;
     border-radius: var(--cabin-radius-m);
-    padding: 1.15em 1.3em;
+    padding: 1.1em 1.3em;
     margin: 1.6em 0;
     font-size: 0.86rem;
     line-height: 1.65;
     overflow-x: auto;
-    box-shadow: var(--cabin-shadow-soft);
+    box-shadow: none;
 }
 
 body.theme-light pre[class*="language-"],
 body.theme-light pre {
-    background-color: #221a13 !important;
+    background-color: #f6f8fa !important;
+    color: #1f2328;
+    border-color: #d1d9e0;
 }
 
 pre code {
@@ -958,7 +985,28 @@ pre code .token.comment,
 pre code .token.prolog,
 pre code .token.doctype,
 pre code .token.cdata {
-    color: #8d7a67;
+    color: #8b949e;
+}
+
+pre code .token.keyword,
+pre code .token.selector,
+pre code .token.operator {
+    color: #ff7b72;
+}
+
+pre code .token.string,
+pre code .token.attr-value {
+    color: #a5d6ff;
+}
+
+pre code .token.number,
+pre code .token.boolean {
+    color: #79c0ff;
+}
+
+pre code .token.function,
+pre code .token.tag {
+    color: #d2a8ff;
 }
 
 /* Mermaid diagrams: paper, not a white sticker. */
@@ -1295,7 +1343,7 @@ a.tag:hover,
    ------------------------------------------------------------------ */
 
 .search-container {
-    background-color: color-mix(in srgb, #1a120c 55%, transparent);
+    background-color: rgba(1, 4, 9, 0.72);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     padding-top: 9vh;
@@ -1325,7 +1373,6 @@ a.tag:hover,
     box-shadow: 0 0 0 3px var(--accent-wash);
     outline: none;
 }
-
 .searchresult {
     background-color: transparent;
     border: 1px solid transparent;
@@ -1384,14 +1431,21 @@ a.tag:hover,
 .navigation-hint code {
     background-color: var(--cabin-surface-soft);
     border: 1px solid var(--cabin-line);
-    border-radius: 5px;
-    padding: 1px 6px;
-    font-size: 0.72rem;
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-family: var(--cabin-font-mono);
+    font-size: 0.7rem;
     color: var(--cabin-ink-soft);
 }
 
 .preview-body pre {
     margin: 1em 0;
+}
+
+/* The preview re-renders the note's own header, which the panel already
+   repeats above; show only the body. */
+.preview-body > header {
+    display: none;
 }
 
 /* ---------------------------------------------------------------------
