@@ -207,13 +207,28 @@ body.theme-dark {
    3. Page shell
    ------------------------------------------------------------------ */
 
+/* Gardens using the default stylesheet (no Obsidian theme) never load
+   obsidian-base.css, which is what normally resets the UA body margin and
+   sets border-box sizing. Establish both here so the layout is identical
+   with or without a theme. */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 html {
     scroll-behavior: smooth;
     background: var(--cabin-canvas);
 }
 
-body.theme-light,
-body.theme-dark {
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
     background-color: var(--cabin-canvas);
     background-image: var(--cabin-glow);
     background-repeat: no-repeat;
@@ -224,6 +239,8 @@ body.theme-dark {
     letter-spacing: 0.002em;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
 ::selection {
