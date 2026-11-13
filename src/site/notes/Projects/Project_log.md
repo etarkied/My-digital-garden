@@ -1,8 +1,14 @@
 ---
-{"dg-publish":true,"permalink":"/projects/project-log/","tags":["gardenEntry"],"dg-note-properties":{}}
+{"dg-publish":true,"permalink":"/projects/project-log/","tags":["gardenEntry"],"dg-note-properties":{"Adress":"https://my-digital-garden-8o3.pages.dev"}}
 ---
 
-笔记的发布地址: https://my-digital-garden-8o3.pages.dev
+## 2026.11.13
+- 今天我们来解决上位机的问题
+- 阅读agent生成的[[Motor_knowledge/上位机开发/TMC6460_上位机_精读与开发指南\|TMC6460_上位机_精读与开发指南]]
+- 重新学习在驱动控制中, dq轴电流的作用, 笔记放在: [[Motor_knowledge/d轴和q轴电流的作用\|d轴和q轴电流的作用]]
+- 研究发现, tmcl_ide在开环的时候会使用斜坡发生器自动注入一个励磁电流, id≈203.36ma, ai说没有这个励磁电流会使电流矢量为0, 电机完全不转了, 不过我问了翁工, 翁工说开环注入一个励磁电流正常, 可加可不加, 不加也不会导致不转. 这个有机会我自己验证一下.
+- 编写并阅读:[[Motor_knowledge/上位机开发/文件地图和上位机架构\|文件地图和上位机架构]]
+
 ## 2026.11.12
 - 进一步学习什么是铜损什么是铁损(因为储工最近在考虑这个问题, 我觉得我需要对齐一下知识储备), 以及如何降低他们, 笔记放在: [[Motor_knowledge/铜损和铁损\|铜损和铁损]]
 - 贾工说我们之前选择的小封装的stm芯片不行, 因为温度不匹配, 我的大概理解是tmc的耐温更高, 如果这个小芯片靠近驱动芯片布置, 因为小芯片的温度范围是 -40~+85, 而 TMC6460 是 −40~+125 °C, 所以小芯片会过温关断. 学习什么是结温温度, 笔记放在: [[Hardware_knowledge/什么是结温温度\|什么是结温温度]]
