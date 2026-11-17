@@ -2,8 +2,19 @@
 {"dg-publish":true,"permalink":"/projects/project-log/","tags":["gardenEntry"],"dg-note-properties":{"Adress":"https://my-digital-garden-8o3.pages.dev"}}
 ---
 
+## 2026.11.17
+- 继续阅读driver.py, 学习定义一个空类的作用.
+- 学习类的继承和派生子类: 笔记放在:[[CoreConcepts/Python/空类的作用, 类的继承和派生子类\|空类的作用, 类的继承和派生子类]]
+- 学习为什么子类的属性有时必须交给父类来进行保存.
+- 再次学习try...except语法, 以及其作用, 同时弄懂其和raise的区别
+- 学习什么是导入时的顶层语句, 明白导入时顶层语句会被直接执行, 但是函数和类, 导入之后python只是把名字和函数体关联起来, 不会直接执行, 只有被调用的时候才会执行. 这也是为什么, 绝大多数代码都不是直接写逻辑代码 ,而是把逻辑代码写在main里面, 然后用一个`if __name__ == "__main__":`
+- 学习对象的属性的前缀, 不同的前缀对应的功能和作用是什么, note: python没有真正的private关键字(不像java/c++), 所以python的约定主要靠约定, 写法上为: name 公开随便用, `_name` 仅内部使用, 外部不应该直接读写, `__name` 触发name mangling, 用于避免子类冲突, `__name__` python自带的保留特殊名字, 不能自己造, 单独一个`_`, 惯用的"我不关心的变量", 用法主要是`for _ in range(3):`
+- 学习什么是python中的句柄, 其有什么作用和功能, 为什么要在类中定义句柄, 笔记放在:[[CoreConcepts/Python/什么是python中的句柄\|什么是python中的句柄]]
+- 学习一下python中的装饰器, @contextmanager和@property, 这两个在我们的代码中出现的频次太高了, 需要弄懂其含义
+
 ## 2026.11.16
-- 阅读config代码, 弄清楚每一行的含义, L62-
+- 阅读config代码, 弄清楚每一行的含义, 完成了config.py的阅读, 还有一个变量暂时不知道是什么意思, 之后继续研究
+- 进入driver.py的学习, 笔记: [[Motor_knowledge/上位机开发/第二讲-driver.py\|第二讲-driver.py]]
 - config中修改了栅极压摆率`SLEW_RATE = "SR_100_V_PER_US`, **栅极压摆率 200 → 100 V/µs**, 学习什么是压摆率, 以及什么是EMI, 为什么要修改这个压摆率, 笔记: [[Hardware_knowledge/什么是压摆率, 什么是EMI.\|什么是压摆率, 什么是EMI.]]
 - config里面`AUTO_KIRCHHOFF_LIM = 61852`, 这个是自动基尔霍夫（死区/续流补偿）限值，IDE 原值照搬, 学习一下这个死区/续流补偿的作用是什么? 笔记: [[Motor_knowledge/死区和续流补偿的作用是什么, 为什么会存在死区\|死区和续流补偿的作用是什么, 为什么会存在死区]]
 - 什么是开关管, 什么是续流二极管, 续流二极管为什么能够稳压, 笔记: [[Hardware_knowledge/什么是开关管, 什么是续流二极管, 续流二极管为什么能够稳压\|什么是开关管, 什么是续流二极管, 续流二极管为什么能够稳压]], 看来续流二极管不是稳压, 而是进行钳位.
@@ -12,7 +23,7 @@
 - 学习一下定义私有函数的规范, 私有函数也可以被import, 比如`import module; module._enter_system()` 或者`from module import _enter_system` ,不过`from module import *` 默认不会导入它
 - IDE导出的代码中, 很多函数使用了int()函数, 因为寄存器只能读写整数, 所以上位机需要通过int()函数进行转换, 这样寄存器才能正常读写. 重新学习一下int()函数的转换逻辑, 笔记: [[CoreConcepts/Python/int()函数的转换逻辑\|int()函数的转换逻辑]]
 - 学习`__init__`协议是什么,笔记:[[CoreConcepts/Python/__init__协议是什么东西\|__init__协议是什么东西]]
-- 
+- 学习访问self对象中的属性的方法, 一种是访问当前对象self的一个属性, 另一个方法是对这个对象做下标_
 
 ## 2026.11.15
 - 学习什么是字段, 其实字段就是域, 在寄存器内部中划分出来的一段连续bit, 用来单独表示某一个参数, 就是注意字段写入的时候, 如果只打算修改寄存器里面某一小段, 又不能破坏同寄存器里其他字段的值---> 必须先读整寄存器, 改局部bit ,然后再写回去(RMW)
